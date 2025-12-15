@@ -1,0 +1,18 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "kelas",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "teacherID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ]
+}
