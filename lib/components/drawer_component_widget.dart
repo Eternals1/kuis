@@ -87,11 +87,13 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                                 .secondaryBackground,
                             shape: BoxShape.circle,
                           ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100.0),
-                            child: Image.network(
-                              'https://picsum.photos/seed/964/600',
-                              fit: BoxFit.cover,
+                          child: AuthUserStreamWidget(
+                            builder: (context) => ClipRRect(
+                              borderRadius: BorderRadius.circular(100.0),
+                              child: Image.network(
+                                currentUserPhoto,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
@@ -99,24 +101,26 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Aska Skata',
-                              textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyMediumFamily,
-                                    color: Color(0xFF444444),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                    useGoogleFonts:
-                                        !FlutterFlowTheme.of(context)
-                                            .bodyMediumIsCustom,
-                                  ),
+                            AuthUserStreamWidget(
+                              builder: (context) => Text(
+                                currentUserDisplayName,
+                                textAlign: TextAlign.start,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily,
+                                      color: Color(0xFF444444),
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                      useGoogleFonts:
+                                          !FlutterFlowTheme.of(context)
+                                              .bodyMediumIsCustom,
+                                    ),
+                              ),
                             ),
                             Text(
-                              'aska.siapa@gmail.com',
+                              currentUserEmail,
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -147,74 +151,120 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                     Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: FFAppState().selectedKey == 'kelas_drawer'
-                                ? Color(0xFFE0DAC7)
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(18.0),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(12.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Icon(
-                                  Icons.class_,
-                                  color: Color(0xFF444444),
-                                  size: 24.0,
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            FFAppState().selectedKey = '\"Kelas_drawer';
+                            safeSetState(() {});
+
+                            context.pushNamed(
+                              HomePageWidget.routeName,
+                              extra: <String, dynamic>{
+                                kTransitionInfoKey: TransitionInfo(
+                                  hasTransition: true,
+                                  transitionType:
+                                      PageTransitionType.bottomToTop,
                                 ),
-                                Text(
-                                  'Kelas',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
-                                            .bodyMediumFamily,
-                                        color: Color(0xFF444444),
-                                        letterSpacing: 0.0,
-                                        useGoogleFonts:
-                                            !FlutterFlowTheme.of(context)
-                                                .bodyMediumIsCustom,
-                                      ),
-                                ),
-                              ].divide(SizedBox(width: 10.0)),
+                              },
+                            );
+
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: FFAppState().selectedKey == 'Kelas_drawer'
+                                  ? Color(0xFFE0DAC7)
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Icon(
+                                    Icons.class_,
+                                    color: Color(0xFF444444),
+                                    size: 24.0,
+                                  ),
+                                  Text(
+                                    'Kelas',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
+                                          color: Color(0xFF444444),
+                                          letterSpacing: 0.0,
+                                          useGoogleFonts:
+                                              !FlutterFlowTheme.of(context)
+                                                  .bodyMediumIsCustom,
+                                        ),
+                                  ),
+                                ].divide(SizedBox(width: 10.0)),
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color:
-                                FFAppState().selectedKey == 'Notifikasi_drawer'
-                                    ? Color(0xFFE0DAC7)
-                                    : Colors.transparent,
-                            borderRadius: BorderRadius.circular(18.0),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(12.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Icon(
-                                  Icons.notifications_sharp,
-                                  color: Color(0xFF444444),
-                                  size: 24.0,
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            FFAppState().selectedKey = 'Notifikasi_drawer';
+                            safeSetState(() {});
+
+                            context.pushNamed(
+                              PagenotifikasiWidget.routeName,
+                              extra: <String, dynamic>{
+                                kTransitionInfoKey: TransitionInfo(
+                                  hasTransition: true,
+                                  transitionType:
+                                      PageTransitionType.bottomToTop,
                                 ),
-                                Text(
-                                  'Notifikasi',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
-                                            .bodyMediumFamily,
-                                        color: Color(0xFF444444),
-                                        letterSpacing: 0.0,
-                                        useGoogleFonts:
-                                            !FlutterFlowTheme.of(context)
-                                                .bodyMediumIsCustom,
-                                      ),
-                                ),
-                              ].divide(SizedBox(width: 10.0)),
+                              },
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: FFAppState().selectedKey ==
+                                      'Notifikasi_drawer'
+                                  ? Color(0xFFE0DAC7)
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Icon(
+                                    Icons.notifications_active,
+                                    color: Color(0xFF444444),
+                                    size: 24.0,
+                                  ),
+                                  Text(
+                                    'notifikasi',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
+                                          color: Color(0xFF444444),
+                                          letterSpacing: 0.0,
+                                          useGoogleFonts:
+                                              !FlutterFlowTheme.of(context)
+                                                  .bodyMediumIsCustom,
+                                        ),
+                                  ),
+                                ].divide(SizedBox(width: 10.0)),
+                              ),
                             ),
                           ),
                         ),
@@ -246,12 +296,10 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                           ),
                           StreamBuilder<List<KelasRecord>>(
                             stream: queryKelasRecord(
-                              queryBuilder: (kelasRecord) => kelasRecord
-                                  .where(
-                                    'teacherID',
-                                    isEqualTo: currentUserUid,
-                                  )
-                                  .orderBy('createdAt'),
+                              queryBuilder: (kelasRecord) => kelasRecord.where(
+                                'teacherID',
+                                isEqualTo: currentUserUid,
+                              ),
                             ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
@@ -280,72 +328,99 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                                 itemBuilder: (context, listViewIndex) {
                                   final listViewKelasRecord =
                                       listViewKelasRecordList[listViewIndex];
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(12.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Container(
-                                            width: 38.6,
-                                            height: 38.6,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
+                                  return InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      FFAppState().selectedKey =
+                                          'kelas${listViewKelasRecord.reference.id}';
+                                      safeSetState(() {});
+
+                                      context.pushNamed(
+                                          KelascreatedWidget.routeName);
+
+                                      Navigator.pop(context);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: FFAppState().selectedKey ==
+                                                'kelas${listViewKelasRecord.reference.id}'
+                                            ? Color(0xFFE0DAC7)
+                                            : Colors.transparent,
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(12.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Container(
+                                              width: 38.6,
+                                              height: 38.6,
+                                              decoration: BoxDecoration(
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .tertiary,
-                                                width: 2.0,
+                                                        .secondaryBackground,
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiary,
+                                                  width: 2.0,
+                                                ),
                                               ),
-                                            ),
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: Text(
-                                                listViewKelasRecord.namakelas,
-                                                maxLines: 1,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMediumFamily,
-                                                          fontSize: 18.0,
-                                                          letterSpacing: 0.0,
-                                                          useGoogleFonts:
-                                                              !FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMediumIsCustom,
-                                                        ),
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            listViewKelasRecord.namakelas,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily:
+                                              child: Align(
+                                                alignment: AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Text(
+                                                  valueOrDefault<String>(
+                                                    listViewKelasRecord
+                                                        .namakelas,
+                                                    'KE',
+                                                  ),
+                                                  maxLines: 1,
+                                                  style:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyMediumFamily,
-                                                  color: Color(0xFF444444),
-                                                  letterSpacing: 0.0,
-                                                  useGoogleFonts:
-                                                      !FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMediumIsCustom,
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumFamily,
+                                                            fontSize: 18.0,
+                                                            letterSpacing: 0.0,
+                                                            useGoogleFonts:
+                                                                !FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumIsCustom,
+                                                          ),
                                                 ),
-                                          ),
-                                        ].divide(SizedBox(width: 10.0)),
+                                              ),
+                                            ),
+                                            Text(
+                                              listViewKelasRecord.namakelas,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMediumFamily,
+                                                    color: Color(0xFF444444),
+                                                    letterSpacing: 0.0,
+                                                    useGoogleFonts:
+                                                        !FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMediumIsCustom,
+                                                  ),
+                                            ),
+                                          ].divide(SizedBox(width: 10.0)),
+                                        ),
                                       ),
                                     ),
                                   );
@@ -353,90 +428,89 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                               );
                             },
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0x00E0DAC7),
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0x00E0DAC7),
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0x00E0DAC7),
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                          ),
                         ].divide(SizedBox(height: 11.0)),
                       ),
                     ),
-                    SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
-                            child: Text(
-                              'Kelas yang tergabung',
-                              textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyMediumFamily,
-                                    color: Color(0xFF444444),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                    useGoogleFonts:
-                                        !FlutterFlowTheme.of(context)
-                                            .bodyMediumIsCustom,
-                                  ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          child: Text(
+                            'Kelas yang tergabung',
+                            textAlign: TextAlign.start,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily,
+                                  color: Color(0xFF444444),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                  useGoogleFonts: !FlutterFlowTheme.of(context)
+                                      .bodyMediumIsCustom,
+                                ),
+                          ),
+                        ),
+                        StreamBuilder<List<KelasRecord>>(
+                          stream: queryKelasRecord(
+                            queryBuilder: (kelasRecord) => kelasRecord.where(
+                              'studentsID',
+                              arrayContains: currentUserUid,
                             ),
                           ),
-                          StreamBuilder<List<KelasRecord>>(
-                            stream: queryKelasRecord(
-                              queryBuilder: (kelasRecord) => kelasRecord.where(
-                                'studentsID',
-                                arrayContains: currentUserUid,
-                              ),
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).primary,
-                                      ),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      FlutterFlowTheme.of(context).primary,
                                     ),
                                   ),
-                                );
-                              }
-                              List<KelasRecord>
-                                  kelasTergabungListViewKelasRecordList =
-                                  snapshot.data!;
+                                ),
+                              );
+                            }
+                            List<KelasRecord>
+                                kelasTergabungListViewKelasRecordList =
+                                snapshot.data!;
 
-                              return ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: kelasTergabungListViewKelasRecordList
-                                    .length,
-                                itemBuilder:
-                                    (context, kelasTergabungListViewIndex) {
-                                  final kelasTergabungListViewKelasRecord =
-                                      kelasTergabungListViewKelasRecordList[
-                                          kelasTergabungListViewIndex];
-                                  return Container(
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              primary: false,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount:
+                                  kelasTergabungListViewKelasRecordList.length,
+                              itemBuilder:
+                                  (context, kelasTergabungListViewIndex) {
+                                final kelasTergabungListViewKelasRecord =
+                                    kelasTergabungListViewKelasRecordList[
+                                        kelasTergabungListViewIndex];
+                                return InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    FFAppState().selectedKey =
+                                        'kelas${kelasTergabungListViewKelasRecord.reference.id}';
+                                    safeSetState(() {});
+
+                                    context
+                                        .pushNamed(KelasjoinedWidget.routeName);
+
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
                                     decoration: BoxDecoration(
-                                      color: Color(0x00E0DAC7),
+                                      color: FFAppState().selectedKey ==
+                                              'kelas${kelasTergabungListViewKelasRecord.reference.id}'
+                                          ? Color(0xFFE0DAC7)
+                                          : Color(0x00000000),
                                       borderRadius: BorderRadius.circular(18.0),
                                     ),
                                     child: Padding(
@@ -463,8 +537,11 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                                               alignment: AlignmentDirectional(
                                                   0.0, 0.0),
                                               child: Text(
-                                                kelasTergabungListViewKelasRecord
-                                                    .namakelas,
+                                                valueOrDefault<String>(
+                                                  kelasTergabungListViewKelasRecord
+                                                      .namakelas,
+                                                  'KE',
+                                                ),
                                                 textAlign: TextAlign.center,
                                                 maxLines: 1,
                                                 style:
@@ -506,13 +583,13 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                                         ].divide(SizedBox(width: 10.0)),
                                       ),
                                     ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ].divide(SizedBox(height: 11.0)),
-                      ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ].divide(SizedBox(height: 11.0)),
                     ),
                   ]
                       .divide(SizedBox(height: 19.0))

@@ -51,6 +51,11 @@ class KelasRecord extends FirestoreRecord {
   List<String> get studentsID => _studentsID ?? const [];
   bool hasStudentsID() => _studentsID != null;
 
+  // "studentCount" field.
+  int? _studentCount;
+  int get studentCount => _studentCount ?? 0;
+  bool hasStudentCount() => _studentCount != null;
+
   void _initializeFields() {
     _namakelas = snapshotData['namakelas'] as String?;
     _teacherID = snapshotData['teacherID'] as String?;
@@ -59,6 +64,7 @@ class KelasRecord extends FirestoreRecord {
     _kodeKelas = snapshotData['kodeKelas'] as String?;
     _createdAt = snapshotData['createdAt'] as DateTime?;
     _studentsID = getDataList(snapshotData['studentsID']);
+    _studentCount = castToType<int>(snapshotData['studentCount']);
   }
 
   static CollectionReference get collection =>
@@ -100,6 +106,7 @@ Map<String, dynamic> createKelasRecordData({
   String? teacherName,
   String? kodeKelas,
   DateTime? createdAt,
+  int? studentCount,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -108,6 +115,7 @@ Map<String, dynamic> createKelasRecordData({
       'teacherName': teacherName,
       'kodeKelas': kodeKelas,
       'createdAt': createdAt,
+      'studentCount': studentCount,
     }.withoutNulls,
   );
 
@@ -126,7 +134,8 @@ class KelasRecordDocumentEquality implements Equality<KelasRecord> {
         listEquality.equals(e1?.participantIds, e2?.participantIds) &&
         e1?.kodeKelas == e2?.kodeKelas &&
         e1?.createdAt == e2?.createdAt &&
-        listEquality.equals(e1?.studentsID, e2?.studentsID);
+        listEquality.equals(e1?.studentsID, e2?.studentsID) &&
+        e1?.studentCount == e2?.studentCount;
   }
 
   @override
@@ -137,7 +146,8 @@ class KelasRecordDocumentEquality implements Equality<KelasRecord> {
         e?.participantIds,
         e?.kodeKelas,
         e?.createdAt,
-        e?.studentsID
+        e?.studentsID,
+        e?.studentCount
       ]);
 
   @override

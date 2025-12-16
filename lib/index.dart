@@ -24,3 +24,5 @@ export '/kelas_dibuat/detail_soal/detail_soal_widget.dart'
 export '/kelas_didaftar/kelasjoined/kelasjoined_widget.dart'
     show KelasjoinedWidget;
 export '/kelas_didaftar/kuisplay/kuisplay_widget.dart' show KuisplayWidget;
+export '/pagenotifikasi/pagenotifikasi_widget.dart' show PagenotifikasiWidget;
+export '/pengaturan/pengaturan_widget.dart' show PengaturanWidget;

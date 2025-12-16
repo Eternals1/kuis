@@ -158,6 +158,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: KuisplayWidget.routeName,
           path: KuisplayWidget.routePath,
           builder: (context, params) => KuisplayWidget(),
+        ),
+        FFRoute(
+          name: PagenotifikasiWidget.routeName,
+          path: PagenotifikasiWidget.routePath,
+          builder: (context, params) => PagenotifikasiWidget(),
+        ),
+        FFRoute(
+          name: PengaturanWidget.routeName,
+          path: PengaturanWidget.routePath,
+          builder: (context, params) => PengaturanWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
