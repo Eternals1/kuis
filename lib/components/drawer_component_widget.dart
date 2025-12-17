@@ -187,64 +187,6 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                             ),
                           ),
                         ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            FFAppState().selectedKey = 'Notifikasi_drawer';
-                            safeSetState(() {});
-
-                            context.pushNamed(
-                              PagenotifikasiWidget.routeName,
-                              extra: <String, dynamic>{
-                                kTransitionInfoKey: TransitionInfo(
-                                  hasTransition: true,
-                                  transitionType:
-                                      PageTransitionType.bottomToTop,
-                                ),
-                              },
-                            );
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: FFAppState().selectedKey ==
-                                      'Notifikasi_drawer'
-                                  ? Color(0xFFE0DAC7)
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(12.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Icon(
-                                    Icons.notifications_active,
-                                    color: Color(0xFF444444),
-                                    size: 24.0,
-                                  ),
-                                  Text(
-                                    'notifikasi',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          color: Color(0xFF444444),
-                                          letterSpacing: 0.0,
-                                          useGoogleFonts:
-                                              !FlutterFlowTheme.of(context)
-                                                  .bodyMediumIsCustom,
-                                        ),
-                                  ),
-                                ].divide(SizedBox(width: 10.0)),
-                              ),
-                            ),
-                          ),
-                        ),
                       ].divide(SizedBox(height: 6.0)),
                     ),
                     SingleChildScrollView(

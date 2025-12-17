@@ -149,12 +149,12 @@ class _PartisipanWidgetState extends State<PartisipanWidget> {
                                     ),
                               ),
                             ),
-                            StreamBuilder<List<UsersRecord>>(
-                              stream: queryUsersRecord(
-                                queryBuilder: (usersRecord) =>
-                                    usersRecord.where(
-                                  'uid',
-                                  isEqualTo: partisipanKelasRecord.teacherID,
+                            StreamBuilder<List<KelasRecord>>(
+                              stream: queryKelasRecord(
+                                queryBuilder: (kelasRecord) =>
+                                    kelasRecord.where(
+                                  'teacherID',
+                                  isEqualTo: currentUserUid,
                                 ),
                                 singleRecord: true,
                               ),
@@ -174,15 +174,15 @@ class _PartisipanWidgetState extends State<PartisipanWidget> {
                                     ),
                                   );
                                 }
-                                List<UsersRecord> guruUsersRecordList =
+                                List<KelasRecord> guruKelasRecordList =
                                     snapshot.data!;
                                 // Return an empty Container when the item does not exist.
                                 if (snapshot.data!.isEmpty) {
                                   return Container();
                                 }
-                                final guruUsersRecord =
-                                    guruUsersRecordList.isNotEmpty
-                                        ? guruUsersRecordList.first
+                                final guruKelasRecord =
+                                    guruKelasRecordList.isNotEmpty
+                                        ? guruKelasRecordList.first
                                         : null;
 
                                 return Container(
@@ -196,25 +196,25 @@ class _PartisipanWidgetState extends State<PartisipanWidget> {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        AuthUserStreamWidget(
-                                          builder: (context) => Text(
-                                            currentUserDisplayName,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMediumFamily,
-                                                  fontSize: 18.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  useGoogleFonts:
-                                                      !FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMediumIsCustom,
-                                                ),
+                                        Text(
+                                          valueOrDefault<String>(
+                                            guruKelasRecord?.teacherName,
+                                            'nama guru',
                                           ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                fontSize: 18.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -247,32 +247,66 @@ class _PartisipanWidgetState extends State<PartisipanWidget> {
                                     ),
                               ),
                             ),
-                            ListView(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    borderRadius: BorderRadius.circular(11.0),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(22.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
+                            StreamBuilder<List<KelasRecord>>(
+                              stream: queryKelasRecord(
+                                queryBuilder: (kelasRecord) => kelasRecord
+                                    .where(
+                                      'studentsID',
+                                      arrayContains: currentUserUid,
+                                    )
+                                    .orderBy('createdAt'),
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          FlutterFlowTheme.of(context).primary,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<KelasRecord> listViewKelasRecordList =
+                                    snapshot.data!;
+
+                                return ListView.separated(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: listViewKelasRecordList.length,
+                                  separatorBuilder: (_, __) =>
+                                      SizedBox(height: 10.0),
+                                  itemBuilder: (context, listViewIndex) {
+                                    final listViewKelasRecord =
+                                        listViewKelasRecordList[listViewIndex];
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius:
+                                            BorderRadius.circular(11.0),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(22.0),
+                                        child: Row(
                                           mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            AuthUserStreamWidget(
-                                              builder: (context) => Text(
-                                                currentUserDisplayName,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                AuthUserStreamWidget(
+                                                  builder: (context) => Text(
+                                                    currentUserDisplayName,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily:
@@ -288,15 +322,17 @@ class _PartisipanWidgetState extends State<PartisipanWidget> {
                                                                       .of(context)
                                                                   .bodyMediumIsCustom,
                                                         ),
-                                              ),
+                                                  ),
+                                                ),
+                                              ].divide(SizedBox(width: 4.0)),
                                             ),
-                                          ].divide(SizedBox(width: 4.0)),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ].divide(SizedBox(height: 10.0)),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           ].divide(SizedBox(height: 5.0)),
                         ),
