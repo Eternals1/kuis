@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'join_class_page_widget.dart' show JoinClassPageWidget;
@@ -10,6 +11,8 @@ class JoinClassPageModel extends FlutterFlowModel<JoinClassPageWidget> {
   FocusNode? kodekelasFocusNode;
   TextEditingController? kodekelasTextController;
   String? Function(BuildContext, String?)? kodekelasTextControllerValidator;
+  // Stores action output result for [Firestore Query - Query a collection] action in Container widget.
+  List<KelasRecord>? documentjoin;
 
   @override
   void initState(BuildContext context) {}

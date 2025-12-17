@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 import '/index.dart';
@@ -125,29 +124,76 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => CreateClassPageWidget(),
         ),
         FFRoute(
-          name: KelascreatedWidget.routeName,
-          path: KelascreatedWidget.routePath,
-          builder: (context, params) => KelascreatedWidget(),
+          name: DetailkelaspageWidget.routeName,
+          path: DetailkelaspageWidget.routePath,
+          builder: (context, params) => DetailkelaspageWidget(
+            kelasRef: params.getParam(
+              'kelasRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['kelas'],
+            ),
+          ),
         ),
         FFRoute(
           name: PartisipanWidget.routeName,
           path: PartisipanWidget.routePath,
-          builder: (context, params) => PartisipanWidget(),
+          builder: (context, params) => PartisipanWidget(
+            kelasRef: params.getParam(
+              'kelasRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['kelas'],
+            ),
+          ),
         ),
         FFRoute(
-          name: DetailKuisWidget.routeName,
-          path: DetailKuisWidget.routePath,
-          builder: (context, params) => DetailKuisWidget(),
+          name: TambahkuispageWidget.routeName,
+          path: TambahkuispageWidget.routePath,
+          builder: (context, params) => TambahkuispageWidget(
+            kelasRef: params.getParam(
+              'kelasRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['kelas'],
+            ),
+          ),
         ),
         FFRoute(
-          name: SoalGuruWidget.routeName,
-          path: SoalGuruWidget.routePath,
-          builder: (context, params) => SoalGuruWidget(),
+          name: SoalKuisWidget.routeName,
+          path: SoalKuisWidget.routePath,
+          builder: (context, params) => SoalKuisWidget(
+            kelasRef: params.getParam(
+              'kelasRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['kelas'],
+            ),
+            kuisRef: params.getParam(
+              'kuisRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['kuis'],
+            ),
+          ),
         ),
         FFRoute(
-          name: DetailSoalWidget.routeName,
-          path: DetailSoalWidget.routePath,
-          builder: (context, params) => DetailSoalWidget(),
+          name: TambahsoalpageWidget.routeName,
+          path: TambahsoalpageWidget.routePath,
+          builder: (context, params) => TambahsoalpageWidget(
+            kelasRef: params.getParam(
+              'kelasRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['kelas'],
+            ),
+            kuisRef: params.getParam(
+              'kuisRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['kuis'],
+            ),
+          ),
         ),
         FFRoute(
           name: KelasjoinedWidget.routeName,
@@ -157,7 +203,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: KuisplayWidget.routeName,
           path: KuisplayWidget.routePath,
-          builder: (context, params) => KuisplayWidget(),
+          builder: (context, params) => KuisplayWidget(
+            kelasRef: params.getParam(
+              'kelasRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['kelas'],
+            ),
+            kuisRef: params.getParam(
+              'kuisRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['kuis'],
+            ),
+          ),
         ),
         FFRoute(
           name: PagenotifikasiWidget.routeName,
@@ -352,15 +411,11 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
-                    ),
+              ? Container(
+                  color: Colors.transparent,
+                  child: Image.asset(
+                    'assets/images/logo_KUISKU.svg',
+                    fit: BoxFit.contain,
                   ),
                 )
               : page;

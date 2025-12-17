@@ -1,6 +1,8 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'crdclassescreate_optionsheet_model.dart';
 export 'crdclassescreate_optionsheet_model.dart';
 
@@ -10,7 +12,12 @@ export 'crdclassescreate_optionsheet_model.dart';
 /// -hapus kuis
 /// -edit kuis
 class CrdclassescreateOptionsheetWidget extends StatefulWidget {
-  const CrdclassescreateOptionsheetWidget({super.key});
+  const CrdclassescreateOptionsheetWidget({
+    super.key,
+    required this.kelasRef,
+  });
+
+  final DocumentReference? kelasRef;
 
   @override
   State<CrdclassescreateOptionsheetWidget> createState() =>
@@ -77,58 +84,91 @@ class _CrdclassescreateOptionsheetWidgetState
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.delete_outline,
-                            color: FlutterFlowTheme.of(context).error,
-                            size: 20.0,
-                          ),
-                          Text(
-                            'Hapus Kelas',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: FlutterFlowTheme.of(context)
-                                      .bodyMediumFamily,
-                                  color: FlutterFlowTheme.of(context).error,
-                                  letterSpacing: 0.0,
-                                  useGoogleFonts: !FlutterFlowTheme.of(context)
-                                      .bodyMediumIsCustom,
-                                ),
-                          ),
-                        ].divide(SizedBox(width: 12.0)),
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          await widget.kelasRef!.delete();
+                          Navigator.pop(context);
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.delete_outline,
+                              color: FlutterFlowTheme.of(context).error,
+                              size: 20.0,
+                            ),
+                            Text(
+                              'Hapus Kelas',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .bodyMediumFamily,
+                                    color: FlutterFlowTheme.of(context).error,
+                                    letterSpacing: 0.0,
+                                    useGoogleFonts:
+                                        !FlutterFlowTheme.of(context)
+                                            .bodyMediumIsCustom,
+                                  ),
+                            ),
+                          ].divide(SizedBox(width: 12.0)),
+                        ),
                       ),
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.share,
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            size: 20.0,
+                    Builder(
+                      builder: (context) => Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            12.0, 0.0, 12.0, 0.0),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            _model.sharedocument =
+                                await KelasRecord.getDocumentOnce(
+                                    widget.kelasRef!);
+                            await Share.share(
+                              _model.sharedocument!.kodeKelas,
+                              sharePositionOrigin:
+                                  getWidgetBoundingBox(context),
+                            );
+                            Navigator.pop(context);
+
+                            safeSetState(() {});
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.share,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 20.0,
+                              ),
+                              Text(
+                                'Bagikan Kelas',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      letterSpacing: 0.0,
+                                      useGoogleFonts:
+                                          !FlutterFlowTheme.of(context)
+                                              .bodyMediumIsCustom,
+                                    ),
+                              ),
+                            ].divide(SizedBox(width: 12.0)),
                           ),
-                          Text(
-                            'Bagikan Kelas',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: FlutterFlowTheme.of(context)
-                                      .bodyMediumFamily,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  letterSpacing: 0.0,
-                                  useGoogleFonts: !FlutterFlowTheme.of(context)
-                                      .bodyMediumIsCustom,
-                                ),
-                          ),
-                        ].divide(SizedBox(width: 12.0)),
+                        ),
                       ),
                     ),
                   ].divide(SizedBox(height: 17.0)),

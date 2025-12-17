@@ -1,8 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'soal_guru_widget.dart' show SoalGuruWidget;
+import '/index.dart';
+import 'soal_kuis_widget.dart' show SoalKuisWidget;
 import 'package:flutter/material.dart';
 
-class SoalGuruModel extends FlutterFlowModel<SoalGuruWidget> {
+class SoalKuisModel extends FlutterFlowModel<SoalKuisWidget> {
   @override
   void initState(BuildContext context) {}
 

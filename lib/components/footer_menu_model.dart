@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'crdclassesjoined_widget.dart' show CrdclassesjoinedWidget;
+import 'footer_menu_widget.dart' show FooterMenuWidget;
 import 'package:flutter/material.dart';
 
-class CrdclassesjoinedModel extends FlutterFlowModel<CrdclassesjoinedWidget> {
+class FooterMenuModel extends FlutterFlowModel<FooterMenuWidget> {
   @override
   void initState(BuildContext context) {}
 

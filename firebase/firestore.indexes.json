@@ -27,6 +27,34 @@
           "order": "ASCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "kuis",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "kelasRef",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "soal",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "kuisRef",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
     }
   ]
 }

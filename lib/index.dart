@@ -13,14 +13,14 @@ export '/add_or_createdpage/join_class_page/join_class_page_widget.dart'
     show JoinClassPageWidget;
 export '/add_or_createdpage/create_class_page/create_class_page_widget.dart'
     show CreateClassPageWidget;
-export '/kelas_dibuat/kelascreated/kelascreated_widget.dart'
-    show KelascreatedWidget;
+export '/kelas_dibuat/detailkelaspage/detailkelaspage_widget.dart'
+    show DetailkelaspageWidget;
 export '/partisipan/partisipan_widget.dart' show PartisipanWidget;
-export '/kelas_dibuat/detail_kuis/detail_kuis_widget.dart'
-    show DetailKuisWidget;
-export '/kelas_dibuat/soal_guru/soal_guru_widget.dart' show SoalGuruWidget;
-export '/kelas_dibuat/detail_soal/detail_soal_widget.dart'
-    show DetailSoalWidget;
+export '/kelas_dibuat/tambahkuispage/tambahkuispage_widget.dart'
+    show TambahkuispageWidget;
+export '/kelas_dibuat/soal_kuis/soal_kuis_widget.dart' show SoalKuisWidget;
+export '/kelas_dibuat/tambahsoalpage/tambahsoalpage_widget.dart'
+    show TambahsoalpageWidget;
 export '/kelas_didaftar/kelasjoined/kelasjoined_widget.dart'
     show KelasjoinedWidget;
 export '/kelas_didaftar/kuisplay/kuisplay_widget.dart' show KuisplayWidget;

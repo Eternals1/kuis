@@ -79,24 +79,6 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Container(
-                          width: 56.0,
-                          height: 56.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            shape: BoxShape.circle,
-                          ),
-                          child: AuthUserStreamWidget(
-                            builder: (context) => ClipRRect(
-                              borderRadius: BorderRadius.circular(100.0),
-                              child: Image.network(
-                                currentUserPhoto,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,11 +119,6 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                             ),
                           ].divide(SizedBox(height: 2.0)),
                         ),
-                        Icon(
-                          Icons.settings,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24.0,
-                        ),
                       ].divide(SizedBox(width: 24.0)),
                     ),
                     Divider(
@@ -157,7 +134,7 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            FFAppState().selectedKey = '\"Kelas_drawer';
+                            FFAppState().selectedKey = 'Kelas_drawer';
                             safeSetState(() {});
 
                             context.pushNamed(
@@ -339,7 +316,14 @@ class _DrawerComponentWidgetState extends State<DrawerComponentWidget> {
                                       safeSetState(() {});
 
                                       context.pushNamed(
-                                          KelascreatedWidget.routeName);
+                                        DetailkelaspageWidget.routeName,
+                                        queryParameters: {
+                                          'kelasRef': serializeParam(
+                                            listViewKelasRecord.reference,
+                                            ParamType.DocumentReference,
+                                          ),
+                                        }.withoutNulls,
+                                      );
 
                                       Navigator.pop(context);
                                     },

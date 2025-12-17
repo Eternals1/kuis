@@ -1,10 +1,11 @@
 import '/components/drawer_component_widget.dart';
 import '/components/footer_menu_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'partisipan_widget.dart' show PartisipanWidget;
+import '/index.dart';
+import 'detailkelaspage_widget.dart' show DetailkelaspageWidget;
 import 'package:flutter/material.dart';
 
-class PartisipanModel extends FlutterFlowModel<PartisipanWidget> {
+class DetailkelaspageModel extends FlutterFlowModel<DetailkelaspageWidget> {
   ///  State fields for stateful widgets in this page.
 
   // Model for FooterMenu component.

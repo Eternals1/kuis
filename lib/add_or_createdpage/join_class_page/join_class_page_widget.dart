@@ -183,43 +183,31 @@ class _JoinClassPageWidgetState extends State<JoinClassPageWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        await queryKelasRecordOnce(
+                        _model.documentjoin = await queryKelasRecordOnce(
                           queryBuilder: (kelasRecord) => kelasRecord.where(
                             'kodeKelas',
                             isEqualTo: _model.kodekelasTextController.text,
                           ),
-                          singleRecord: true,
-                        ).then((s) => s.firstOrNull);
-                        if (containerKelasRecord != null) {
-                          await containerKelasRecord.reference.update({
-                            ...mapToFirestore(
-                              {
-                                'studentsID':
-                                    FieldValue.arrayUnion([currentUserUid]),
-                                'participantIds':
-                                    FieldValue.arrayUnion([currentUserUid]),
-                                'studentCount': FieldValue.increment(1),
-                              },
-                            ),
-                          });
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Kelas tidak ada',
-                                style: TextStyle(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                ),
-                              ),
-                              duration: Duration(milliseconds: 4000),
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).secondary,
-                            ),
-                          );
-                        }
-
+                          limit: 1,
+                        );
+                        await _model.documentjoin!
+                            .elementAtOrNull(0)!
+                            .reference
+                            .update({
+                          ...mapToFirestore(
+                            {
+                              'studentsID':
+                                  FieldValue.arrayUnion([currentUserUid]),
+                              'studentCount': FieldValue.increment(1),
+                              'participantIds':
+                                  FieldValue.arrayUnion([currentUserUid]),
+                            },
+                          ),
+                        });
+                      
                         context.pushNamed(HomePageWidget.routeName);
+
+                        safeSetState(() {});
                       },
                       child: Container(
                         width: double.infinity,

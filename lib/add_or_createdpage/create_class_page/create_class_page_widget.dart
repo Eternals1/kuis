@@ -213,7 +213,7 @@ class _CreateClassPageWidgetState extends State<CreateClassPageWidget> {
                         teacherID: currentUserUid,
                         teacherName: currentUserDisplayName,
                         kodeKelas: _model.kodekelasTextController.text,
-                        studentCount: 0,
+                        studentCount: 1,
                       ),
                       ...mapToFirestore(
                         {

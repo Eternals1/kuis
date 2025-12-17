@@ -1,30 +1,39 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
-import 'detail_soal_model.dart';
-export 'detail_soal_model.dart';
+import 'tambahsoalpage_model.dart';
+export 'tambahsoalpage_model.dart';
 
 /// Quiz Creation Form
-class DetailSoalWidget extends StatefulWidget {
-  const DetailSoalWidget({super.key});
+class TambahsoalpageWidget extends StatefulWidget {
+  const TambahsoalpageWidget({
+    super.key,
+    required this.kelasRef,
+    required this.kuisRef,
+  });
 
-  static String routeName = 'Detail_soal';
-  static String routePath = '/detailSoal';
+  final DocumentReference? kelasRef;
+  final DocumentReference? kuisRef;
+
+  static String routeName = 'tambahsoalpage';
+  static String routePath = '/tambahsoalpage';
 
   @override
-  State<DetailSoalWidget> createState() => _DetailSoalWidgetState();
+  State<TambahsoalpageWidget> createState() => _TambahsoalpageWidgetState();
 }
 
-class _DetailSoalWidgetState extends State<DetailSoalWidget> {
-  late DetailSoalModel _model;
+class _TambahsoalpageWidgetState extends State<TambahsoalpageWidget> {
+  late TambahsoalpageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => DetailSoalModel());
+    _model = createModel(context, () => TambahsoalpageModel());
 
     _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
@@ -67,10 +76,19 @@ class _DetailSoalWidgetState extends State<DetailSoalWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
-          leading: Icon(
-            Icons.arrow_back,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 24.0,
+          leading: InkWell(
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () async {
+              context.safePop();
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 24.0,
+            ),
           ),
           title: Text(
             'Tambah Soal',
@@ -306,10 +324,14 @@ class _DetailSoalWidgetState extends State<DetailSoalWidget> {
                                                 .alternate,
                                       ),
                                       child: Checkbox(
-                                        value: _model.checkboxValue1 ??= true,
+                                        value: _model.otp1Value ??= true,
                                         onChanged: (newValue) async {
-                                          safeSetState(() => _model
-                                              .checkboxValue1 = newValue!);
+                                          safeSetState(() =>
+                                              _model.otp1Value = newValue!);
+                                          if (newValue!) {
+                                            _model.correctIndex = 1;
+                                            safeSetState(() {});
+                                          }
                                         },
                                         side: (FlutterFlowTheme.of(context)
                                                     .alternate !=
@@ -451,10 +473,14 @@ class _DetailSoalWidgetState extends State<DetailSoalWidget> {
                                                 .alternate,
                                       ),
                                       child: Checkbox(
-                                        value: _model.checkboxValue2 ??= false,
+                                        value: _model.opt2Value ??= false,
                                         onChanged: (newValue) async {
-                                          safeSetState(() => _model
-                                              .checkboxValue2 = newValue!);
+                                          safeSetState(() =>
+                                              _model.opt2Value = newValue!);
+                                          if (newValue!) {
+                                            _model.correctIndex = 2;
+                                            safeSetState(() {});
+                                          }
                                         },
                                         side: (FlutterFlowTheme.of(context)
                                                     .alternate !=
@@ -596,10 +622,14 @@ class _DetailSoalWidgetState extends State<DetailSoalWidget> {
                                                 .alternate,
                                       ),
                                       child: Checkbox(
-                                        value: _model.checkboxValue3 ??= false,
+                                        value: _model.opt3Value ??= false,
                                         onChanged: (newValue) async {
-                                          safeSetState(() => _model
-                                              .checkboxValue3 = newValue!);
+                                          safeSetState(() =>
+                                              _model.opt3Value = newValue!);
+                                          if (newValue!) {
+                                            _model.correctIndex = 3;
+                                            safeSetState(() {});
+                                          }
                                         },
                                         side: (FlutterFlowTheme.of(context)
                                                     .alternate !=
@@ -741,10 +771,14 @@ class _DetailSoalWidgetState extends State<DetailSoalWidget> {
                                                 .alternate,
                                       ),
                                       child: Checkbox(
-                                        value: _model.checkboxValue4 ??= false,
+                                        value: _model.opt4Value ??= false,
                                         onChanged: (newValue) async {
-                                          safeSetState(() => _model
-                                              .checkboxValue4 = newValue!);
+                                          safeSetState(() =>
+                                              _model.opt4Value = newValue!);
+                                          if (newValue!) {
+                                            _model.correctIndex = 4;
+                                            safeSetState(() {});
+                                          }
                                         },
                                         side: (FlutterFlowTheme.of(context)
                                                     .alternate !=
@@ -919,12 +953,16 @@ class _DetailSoalWidgetState extends State<DetailSoalWidget> {
                                                       .alternate,
                                             ),
                                             child: Checkbox(
-                                              value: _model.checkboxValue5 ??=
+                                              value: _model.checkboxValue1 ??=
                                                   true,
                                               onChanged: (newValue) async {
                                                 safeSetState(() =>
-                                                    _model.checkboxValue5 =
+                                                    _model.checkboxValue1 =
                                                         newValue!);
+                                                if (newValue!) {
+                                                  _model.score = 5;
+                                                  safeSetState(() {});
+                                                }
                                               },
                                               side:
                                                   (FlutterFlowTheme.of(context)
@@ -983,12 +1021,16 @@ class _DetailSoalWidgetState extends State<DetailSoalWidget> {
                                                       .alternate,
                                             ),
                                             child: Checkbox(
-                                              value: _model.checkboxValue6 ??=
+                                              value: _model.checkboxValue2 ??=
                                                   false,
                                               onChanged: (newValue) async {
                                                 safeSetState(() =>
-                                                    _model.checkboxValue6 =
+                                                    _model.checkboxValue2 =
                                                         newValue!);
+                                                if (newValue!) {
+                                                  _model.score = 10;
+                                                  safeSetState(() {});
+                                                }
                                               },
                                               side:
                                                   (FlutterFlowTheme.of(context)
@@ -1047,12 +1089,16 @@ class _DetailSoalWidgetState extends State<DetailSoalWidget> {
                                                       .alternate,
                                             ),
                                             child: Checkbox(
-                                              value: _model.checkboxValue7 ??=
+                                              value: _model.checkboxValue3 ??=
                                                   false,
                                               onChanged: (newValue) async {
                                                 safeSetState(() =>
-                                                    _model.checkboxValue7 =
+                                                    _model.checkboxValue3 =
                                                         newValue!);
+                                                if (newValue!) {
+                                                  _model.score = 15;
+                                                  safeSetState(() {});
+                                                }
                                               },
                                               side:
                                                   (FlutterFlowTheme.of(context)
@@ -1111,12 +1157,16 @@ class _DetailSoalWidgetState extends State<DetailSoalWidget> {
                                                       .alternate,
                                             ),
                                             child: Checkbox(
-                                              value: _model.checkboxValue8 ??=
+                                              value: _model.checkboxValue4 ??=
                                                   false,
                                               onChanged: (newValue) async {
                                                 safeSetState(() =>
-                                                    _model.checkboxValue8 =
+                                                    _model.checkboxValue4 =
                                                         newValue!);
+                                                if (newValue!) {
+                                                  _model.score = 20;
+                                                  safeSetState(() {});
+                                                }
                                               },
                                               side:
                                                   (FlutterFlowTheme.of(context)
@@ -1178,10 +1228,85 @@ class _DetailSoalWidgetState extends State<DetailSoalWidget> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      if ((_model.textController2.text != '') &&
+                          (_model.correctIndex != null) &&
+                          (_model.otp1Value != null) &&
+                          (_model.opt2Value != null) &&
+                          (_model.opt3Value != null) &&
+                          (_model.opt4Value != null)) {
+                        var soalRecordReference = SoalRecord.collection.doc();
+                        await soalRecordReference.set(createSoalRecordData(
+                          kuisRef: widget.kuisRef,
+                          kelasRef: widget.kelasRef,
+                          story: _model.textController1.text,
+                          question: _model.textController2.text,
+                          option1: _model.otp1Value?.toString(),
+                          option2: _model.opt2Value?.toString(),
+                          option3: _model.opt3Value?.toString(),
+                          option4: _model.opt4Value?.toString(),
+                          correctIndex: _model.correctIndex,
+                          score: _model.score,
+                          createdAt: getCurrentTimestamp,
+                          order: 0,
+                        ));
+                        _model.query = SoalRecord.getDocumentFromData(
+                            createSoalRecordData(
+                              kuisRef: widget.kuisRef,
+                              kelasRef: widget.kelasRef,
+                              story: _model.textController1.text,
+                              question: _model.textController2.text,
+                              option1: _model.otp1Value?.toString(),
+                              option2: _model.opt2Value?.toString(),
+                              option3: _model.opt3Value?.toString(),
+                              option4: _model.opt4Value?.toString(),
+                              correctIndex: _model.correctIndex,
+                              score: _model.score,
+                              createdAt: getCurrentTimestamp,
+                              order: 0,
+                            ),
+                            soalRecordReference);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'buat pertayaan dengan lengkap',
+                              style: TextStyle(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            ),
+                            duration: Duration(milliseconds: 4000),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).secondary,
+                          ),
+                        );
+                      }
+
+                      await widget.kuisRef!.update({
+                        ...mapToFirestore(
+                          {
+                            'questionCount': FieldValue.increment(1),
+                          },
+                        ),
+                      });
+
+                      context.pushNamed(
+                        SoalKuisWidget.routeName,
+                        queryParameters: {
+                          'kelasRef': serializeParam(
+                            widget.kelasRef,
+                            ParamType.DocumentReference,
+                          ),
+                          'kuisRef': serializeParam(
+                            widget.kuisRef,
+                            ParamType.DocumentReference,
+                          ),
+                        }.withoutNulls,
+                      );
+
+                      safeSetState(() {});
                     },
-                    text: 'Button',
+                    text: 'Tambah',
                     options: FFButtonOptions(
                       width: 365.0,
                       height: 50.0,

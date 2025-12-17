@@ -1,36 +1,44 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
-import 'detail_kuis_model.dart';
-export 'detail_kuis_model.dart';
+import 'tambahkuispage_model.dart';
+export 'tambahkuispage_model.dart';
 
 /// Quiz Creation Form
-class DetailKuisWidget extends StatefulWidget {
-  const DetailKuisWidget({super.key});
+class TambahkuispageWidget extends StatefulWidget {
+  const TambahkuispageWidget({
+    super.key,
+    required this.kelasRef,
+  });
 
-  static String routeName = 'DetailKuis';
-  static String routePath = '/detailKuis';
+  final DocumentReference? kelasRef;
+
+  static String routeName = 'Tambahkuispage';
+  static String routePath = '/tambahkuispage';
 
   @override
-  State<DetailKuisWidget> createState() => _DetailKuisWidgetState();
+  State<TambahkuispageWidget> createState() => _TambahkuispageWidgetState();
 }
 
-class _DetailKuisWidgetState extends State<DetailKuisWidget> {
-  late DetailKuisModel _model;
+class _TambahkuispageWidgetState extends State<TambahkuispageWidget> {
+  late TambahkuispageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => DetailKuisModel());
+    _model = createModel(context, () => TambahkuispageModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.namakuisTextController ??= TextEditingController();
+    _model.namakuisFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.subjekkuisTextController ??= TextEditingController();
+    _model.subjekkuisFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -55,10 +63,19 @@ class _DetailKuisWidgetState extends State<DetailKuisWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
-          leading: Icon(
-            Icons.arrow_back,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 24.0,
+          leading: InkWell(
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () async {
+              context.safePop();
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 24.0,
+            ),
           ),
           title: Text(
             'Tambah Kuis',
@@ -88,8 +105,8 @@ class _DetailKuisWidgetState extends State<DetailKuisWidget> {
                   Container(
                     width: double.infinity,
                     child: TextFormField(
-                      controller: _model.textController1,
-                      focusNode: _model.textFieldFocusNode1,
+                      controller: _model.namakuisTextController,
+                      focusNode: _model.namakuisFocusNode,
                       autofocus: false,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -150,15 +167,15 @@ class _DetailKuisWidgetState extends State<DetailKuisWidget> {
                                 .bodyMediumIsCustom,
                           ),
                       cursorColor: FlutterFlowTheme.of(context).primaryText,
-                      validator:
-                          _model.textController1Validator.asValidator(context),
+                      validator: _model.namakuisTextControllerValidator
+                          .asValidator(context),
                     ),
                   ),
                   Container(
                     width: double.infinity,
                     child: TextFormField(
-                      controller: _model.textController2,
-                      focusNode: _model.textFieldFocusNode2,
+                      controller: _model.subjekkuisTextController,
+                      focusNode: _model.subjekkuisFocusNode,
                       autofocus: false,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -219,13 +236,45 @@ class _DetailKuisWidgetState extends State<DetailKuisWidget> {
                                 .bodyMediumIsCustom,
                           ),
                       cursorColor: FlutterFlowTheme.of(context).primaryText,
-                      validator:
-                          _model.textController2Validator.asValidator(context),
+                      validator: _model.subjekkuisTextControllerValidator
+                          .asValidator(context),
                     ),
                   ),
                   FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      var kuisRecordReference = KuisRecord.collection.doc();
+                      await kuisRecordReference.set(createKuisRecordData(
+                        kelasRef: widget.kelasRef,
+                        title: _model.namakuisTextController.text,
+                        subject: _model.subjekkuisTextController.text,
+                        createdBy: currentUserUid,
+                        createdAt: getCurrentTimestamp,
+                      ));
+                      _model.createdkuis = KuisRecord.getDocumentFromData(
+                          createKuisRecordData(
+                            kelasRef: widget.kelasRef,
+                            title: _model.namakuisTextController.text,
+                            subject: _model.subjekkuisTextController.text,
+                            createdBy: currentUserUid,
+                            createdAt: getCurrentTimestamp,
+                          ),
+                          kuisRecordReference);
+
+                      context.pushNamed(
+                        SoalKuisWidget.routeName,
+                        queryParameters: {
+                          'kelasRef': serializeParam(
+                            widget.kelasRef,
+                            ParamType.DocumentReference,
+                          ),
+                          'kuisRef': serializeParam(
+                            _model.createdkuis?.reference,
+                            ParamType.DocumentReference,
+                          ),
+                        }.withoutNulls,
+                      );
+
+                      safeSetState(() {});
                     },
                     text: 'Tambah soal',
                     options: FFButtonOptions(
